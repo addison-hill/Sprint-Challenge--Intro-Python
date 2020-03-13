@@ -33,7 +33,7 @@ def cityreader(cities=[]):
     # For each city record, create a new City instance and add it to the
     # `cities` list
 
-    with open('/Users/Addison/Documents/Lambda/Sprint-Challenge--Intro-Python/src/cityreader/cities.csv', 'rt') as csvfile:
+    with open('/Users/Addison/Documents/Lambda/Sprint-Challenge--Intro-Python/src/cityreader/cities.csv', 'r') as csvfile:
         data = csv.reader(csvfile)
         # Skip first row
         next(data)
@@ -81,13 +81,51 @@ for c in cities:
 
 # TODO Get latitude and longitude values from the user
 
+# Make sure smaller coordinate is first so we can compare range eg: lat[0] > some number
+
+
+def order_check(value1, value2):
+    if value1 < value2:
+        return [value1, value2]
+    else:
+        return [value2, value1]
+
 
 def cityreader_stretch(lat1, lon1, lat2, lon2, cities=[]):
     # within will hold the cities that fall within the specified region
-    within = []
+
+    # Take the lat and lon, make sure they are in order, and then see if they are in range of specified region
+
+    lat_range = order_check(lat1, lat2)
+    lon_range = order_check(lon1, lon2)
+
+    within = [i for i in cities if i.lat > lat_range[0] and i.lat <
+              lat_range[1] and i.lon > lon_range[0] and i.lon < lon_range[1]]
 
     # TODO Ensure that the lat and lon valuse are all floats
     # Go through each city and check to see if it falls within
     # the specified coordinates.
 
     return within
+
+# format input into floats
+
+
+def handleInput(coords1, coords2):
+    concat = f"{coords1},{coords2}"  # "45, -120, 32, -100"
+    return [float(x) for x in concat.split(',')]
+
+# Now we need to get input from user
+
+
+print("-----------------------------------\n\n")
+print("Welcome to Coordinate Range Tracker\n")
+coords1 = input(
+    "Enter lat and lon for first coordinate seperated by comma, Example 45, -120:\n~~>")
+coords2 = input(
+    "Enter lat and lon for second coordinate seperated by comma, Example 45, -120:\n~~>")
+
+coordsArr = handleInput(coords1, coords2)
+
+print(cityreader_stretch(
+    coordsArr[0], coordsArr[1], coordsArr[2], coordsArr[3], cities))
