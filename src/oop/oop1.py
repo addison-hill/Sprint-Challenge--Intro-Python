@@ -1,6 +1,6 @@
 # Write classes for the following class hierarchy:
 #
-#  [Vehicle]->[FlightVehicle]->[Starship]
+#  [Vehicle]->[FlightVehicle]->[Starship] # these are base classes
 #      |                |
 #      v                v
 # [GroundVehicle]      [Airplane]
@@ -17,3 +17,31 @@
 #     pass
 #
 # Put a comment noting which class is the base class
+
+
+class Vehicle:  # Base class
+    pass
+
+
+class FlightVehicle(Vehicle):  # Base class
+    pass
+
+
+class Starship(FlightVehicle):  # Base class
+    pass
+
+
+class Airplane(FlightVehicle):
+    pass
+
+
+class GroundVehicle(Vehicle):
+    pass
+
+
+class Car(GroundVehicle):
+    pass
+
+
+class Motorcycle(GroundVehicle):
+    pass
